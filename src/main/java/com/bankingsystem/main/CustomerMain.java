@@ -1,11 +1,7 @@
 package com.bankingsystem.main;
 
 import com.bankingsystem.controller.CustomerController;
-import com.bankingsystem.entity.BranchEntity;
-import com.bankingsystem.entity.CustomerEntity;
-import com.bankingsystem.form.BranchForm;
 import com.bankingsystem.form.CustomerForm;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
@@ -13,6 +9,7 @@ import java.util.Scanner;
 
 public class CustomerMain {
     public static void main(String[] args) throws SQLException, ParseException {
+
         CustomerController controller = new CustomerController();
         Scanner sc = new Scanner(System.in);
         while (true) {

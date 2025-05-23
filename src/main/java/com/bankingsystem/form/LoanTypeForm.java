@@ -1,6 +1,7 @@
 package com.bankingsystem.form;
 
 public class LoanTypeForm {
+
     private String loanTypeID;
     private String typeName;
     private String interestRate;

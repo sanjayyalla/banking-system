@@ -1,6 +1,4 @@
 package com.bankingsystem.controller;
-
-import com.bankingsystem.entity.LoanStatusEntity;
 import com.bankingsystem.form.LoanStatusForm;
 import com.bankingsystem.service.LoanStatusService;
 import com.bankingsystem.service.impl.LoanStatusServiceImpl;
@@ -20,6 +18,7 @@ public class LoanStatusController {
         }
         return false;
     }
+
     public boolean updateStatus(LoanStatusForm form) throws SQLException
     {
         if(!form.getStatusId().isEmpty() && form.getStatusName()!=null && !form.getStatusName().isEmpty())
@@ -29,6 +28,7 @@ public class LoanStatusController {
         }
         return false;
     }
+
     public String getStatus(String id) throws SQLException {
         if(id!=null && !id.isEmpty())
         {
@@ -36,6 +36,7 @@ public class LoanStatusController {
         }
         return "";
     }
+
     public List<LoanStatusForm> getAllStatus() throws SQLException
     {
         return service.getAllStatus();
@@ -44,4 +45,5 @@ public class LoanStatusController {
     public boolean deleteStatus(String id) throws SQLException {
         return service.deleteStatus(id);
     }
+
 }

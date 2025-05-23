@@ -8,7 +8,7 @@ import java.util.List;
 public interface LoanTypeDao {
     boolean addLoanType(LoanTypeEntity entity) throws SQLException;
 
-    boolean updateLoanType(LoanTypeEntity entit) throws SQLException;
+    boolean updateLoanType(LoanTypeEntity entity) throws SQLException;
 
     String getLoanType(int loanId);
 

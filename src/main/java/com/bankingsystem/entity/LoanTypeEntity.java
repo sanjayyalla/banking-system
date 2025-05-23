@@ -1,6 +1,7 @@
 package com.bankingsystem.entity;
 
 public class LoanTypeEntity {
+
     private int loanTypeID;
     private String typeName;
     private double interestRate;

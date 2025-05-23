@@ -1,11 +1,7 @@
 package com.bankingsystem.dao.impl;
-
 import com.bankingsystem.dao.BranchDao;
 import com.bankingsystem.entity.BranchEntity;
-import com.bankingsystem.entity.LoanStatusEntity;
-import com.bankingsystem.form.BranchForm;
 import com.bankingsystem.util.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +40,7 @@ public class BranchDaoImpl implements BranchDao {
             return rowsUpdated == 1;
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider using a logger in real applications
+            e.printStackTrace();
             return false;
         }
     }
@@ -73,7 +69,7 @@ public class BranchDaoImpl implements BranchDao {
                 return "Branch not found with ID: " + branchId;
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // In production, use a logger
+            e.printStackTrace();
             return "Error retrieving branch: " + e.getMessage();
         }
     }
@@ -103,11 +99,9 @@ public class BranchDaoImpl implements BranchDao {
     public boolean removeBranch(int branchId) {
         String query = "DELETE FROM Branch WHERE branch_id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-
+            PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, branchId);
             int rowsDeleted = statement.executeUpdate();
-
             return rowsDeleted == 1;
 
         } catch (SQLException e) {

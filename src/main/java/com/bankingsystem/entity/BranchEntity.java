@@ -1,6 +1,7 @@
 package com.bankingsystem.entity;
 
 public class BranchEntity {
+
     private int branchId;
     private String name;
     private String address;

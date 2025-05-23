@@ -1,10 +1,7 @@
 package com.bankingsystem.dao.impl;
-
 import com.bankingsystem.dao.CustomerDao;
-import com.bankingsystem.entity.BranchEntity;
 import com.bankingsystem.entity.CustomerEntity;
 import com.bankingsystem.util.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDao {
+
     @Override
     public boolean saveCustomer(CustomerEntity entity) throws SQLException {
         String query = "Insert into Customer(name,email,phone,address,dob) VALUES (?,?,?,?,?)";
@@ -44,7 +42,7 @@ public class CustomerDaoImpl implements CustomerDao {
             return rowsUpdated == 1;
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider using a logger in real applications
+            e.printStackTrace();
             return false;
         }
     }

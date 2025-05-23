@@ -1,12 +1,6 @@
 package com.bankingsystem.main;
-
 import com.bankingsystem.controller.BranchController;
-import com.bankingsystem.entity.BranchEntity;
-import com.bankingsystem.entity.LoanStatusEntity;
 import com.bankingsystem.form.BranchForm;
-import com.bankingsystem.service.BranchService;
-import com.bankingsystem.service.impl.BranchServiceImpl;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -43,6 +37,7 @@ public class BranchMain {
                     }
                 }
                 break;
+
                 case 2: {
                     BranchForm branchForm = new BranchForm();
                     System.out.println("Enter branch id that you want to update: ");
@@ -68,6 +63,7 @@ public class BranchMain {
                     }
                 }
                 break;
+
                 case 3: {
                     System.out.print("Enter Branch ID to get details : ");
                     String branchId = sc.next();
@@ -75,6 +71,7 @@ public class BranchMain {
                     System.out.println(branchDetails);
                 }
                 break;
+
                 case 4: {
                     List<BranchForm> branches = controller.getAllBranches();
                     for (BranchForm branch : branches) {

@@ -1,10 +1,7 @@
 package com.bankingsystem.dao.impl;
-
 import com.bankingsystem.dao.LoanTypeDao;
-import com.bankingsystem.entity.CustomerEntity;
 import com.bankingsystem.entity.LoanTypeEntity;
 import com.bankingsystem.util.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

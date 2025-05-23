@@ -5,12 +5,9 @@ import com.bankingsystem.dao.impl.CustomerDaoImpl;
 import com.bankingsystem.entity.CustomerEntity;
 import com.bankingsystem.form.CustomerForm;
 import com.bankingsystem.service.CustomerService;
-
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

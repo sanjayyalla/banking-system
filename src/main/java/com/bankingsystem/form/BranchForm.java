@@ -1,6 +1,7 @@
 package com.bankingsystem.form;
 
 public class BranchForm {
+
     private String branchId;
     private String name;
     private String address;

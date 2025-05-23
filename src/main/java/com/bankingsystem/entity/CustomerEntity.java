@@ -1,9 +1,8 @@
 package com.bankingsystem.entity;
-
-
 import java.sql.Date;
 
 public class CustomerEntity {
+
     private int custId;
     private String name;
     private String email;

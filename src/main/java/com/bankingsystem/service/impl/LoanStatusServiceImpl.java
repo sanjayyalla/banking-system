@@ -1,11 +1,9 @@
 package com.bankingsystem.service.impl;
-
 import com.bankingsystem.dao.LoanStatusDao;
 import com.bankingsystem.dao.impl.LoanStatusDaoImpl;
 import com.bankingsystem.entity.LoanStatusEntity;
 import com.bankingsystem.form.LoanStatusForm;
 import com.bankingsystem.service.LoanStatusService;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

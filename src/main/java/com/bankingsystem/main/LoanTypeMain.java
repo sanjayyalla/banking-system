@@ -1,13 +1,6 @@
 package com.bankingsystem.main;
-
 import com.bankingsystem.controller.LoanTypeController;
-import com.bankingsystem.entity.BranchEntity;
-import com.bankingsystem.entity.LoanTypeEntity;
-import com.bankingsystem.form.BranchForm;
 import com.bankingsystem.form.LoanTypeForm;
-import com.bankingsystem.service.BranchService;
-import com.bankingsystem.service.impl.BranchServiceImpl;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;

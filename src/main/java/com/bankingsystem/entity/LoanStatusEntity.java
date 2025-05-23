@@ -1,8 +1,9 @@
 package com.bankingsystem.entity;
 
 public class LoanStatusEntity {
-    int statusId;
-    String statusName;
+
+    private int statusId;
+    private String statusName;
 
     public int getStatusId() {
         return statusId;
