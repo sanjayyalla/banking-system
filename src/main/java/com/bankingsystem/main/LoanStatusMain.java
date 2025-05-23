@@ -53,8 +53,8 @@ public class LoanStatusMain {
                 }
                     break;
                 case 4:
-                    List<LoanStatusEntity> statuses = controller.getAllStatus();
-                    for (LoanStatusEntity status : statuses) {
+                    List<LoanStatusForm> statuses = controller.getAllStatus();
+                    for (LoanStatusForm status : statuses) {
                         System.out.println(status.getStatusId() + " " + status.getStatusName());
                     }
                     break;

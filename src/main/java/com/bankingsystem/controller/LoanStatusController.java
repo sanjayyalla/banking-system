@@ -36,7 +36,7 @@ public class LoanStatusController {
         }
         return "";
     }
-    public List<LoanStatusEntity> getAllStatus() throws SQLException
+    public List<LoanStatusForm> getAllStatus() throws SQLException
     {
         return service.getAllStatus();
     }

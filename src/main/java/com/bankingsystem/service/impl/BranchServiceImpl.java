@@ -7,6 +7,7 @@ import com.bankingsystem.form.BranchForm;
 import com.bankingsystem.service.BranchService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BranchServiceImpl implements BranchService {
@@ -39,8 +40,21 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<BranchEntity> getAllBranches() throws SQLException {
-        return dao.getAllBranches();
+    public List<BranchForm> getAllBranches() throws SQLException {
+        List<BranchEntity> entities = dao.getAllBranches(); // Fetch from DAO
+        List<BranchForm> forms = new ArrayList<>();
+
+        for (BranchEntity entity : entities) {
+            BranchForm form = new BranchForm();
+            form.setBranchId(String.valueOf(entity.getBranchId())); // Assuming branchId is int in entity
+            form.setName(entity.getName());
+            form.setAddress(entity.getAddress());
+            form.setCity(entity.getCity());
+            form.setState(entity.getState());
+            forms.add(form);
+        }
+
+        return forms;
     }
 
     @Override

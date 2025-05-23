@@ -1,4 +1,5 @@
 package com.bankingsystem.main;
+
 import com.bankingsystem.controller.BranchController;
 import com.bankingsystem.entity.BranchEntity;
 import com.bankingsystem.entity.LoanStatusEntity;
@@ -60,10 +61,9 @@ public class BranchMain {
                     branchForm.setCity(city);
                     branchForm.setState(state);
                     boolean isUpdated = controller.updateBranch(branchForm);
-                    if(isUpdated)
-                    {
+                    if (isUpdated) {
                         System.out.println("Branch details updated");
-                    }else{
+                    } else {
                         System.out.println("Branch details updation failed");
                     }
                 }
@@ -75,21 +75,22 @@ public class BranchMain {
                     System.out.println(branchDetails);
                 }
                 break;
-                case 4:{
-                    List<BranchEntity> branches = controller.getAllBranches();
-                    for (BranchEntity branch : branches) {
-                        System.out.println(branch.getBranchId() + " " + branch.getName()+" "+branch.getAddress()+" "+branch.getCity()+" "+branch.getState());
-
+                case 4: {
+                    List<BranchForm> branches = controller.getAllBranches();
+                    for (BranchForm branch : branches) {
+                        System.out.println(branch.getBranchId() + " " + branch.getName() + " " +
+                                branch.getAddress() + " " + branch.getCity() + " " + branch.getState());
                     }
                 }
-                case 5:{
+                break;
+
+                case 5: {
                     System.out.println("Enter id to delete : ");
                     String id = sc.next();
                     boolean isDeleted = controller.deleteBranch(id);
-                    if(isDeleted)
-                    {
+                    if (isDeleted) {
                         System.out.println("Branch deleted");
-                    }else{
+                    } else {
                         System.out.println("Branch Not deleted");
                     }
                 }

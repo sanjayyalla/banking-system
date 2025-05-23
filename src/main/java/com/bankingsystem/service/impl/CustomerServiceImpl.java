@@ -11,6 +11,7 @@ import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -53,9 +54,24 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerEntity> getCustomers() throws SQLException {
-        return dao.getCustomers();
+    public List<CustomerForm> getCustomers() throws SQLException {
+        List<CustomerEntity> entities = dao.getCustomers(); // Fetch from DAO
+        List<CustomerForm> forms = new ArrayList<>();
+
+        for (CustomerEntity entity : entities) {
+            CustomerForm form = new CustomerForm();
+            form.setCustId(String.valueOf(entity.getCustId()));
+            form.setName(entity.getName());
+            form.setEmail(entity.getEmail());
+            form.setPhone(entity.getPhone());
+            form.setAddress(entity.getAddress());
+            form.setDob(String.valueOf(entity.getDob()));
+            forms.add(form);
+        }
+
+        return forms;
     }
+
 
     @Override
     public boolean deleteCustomer(String custID) {

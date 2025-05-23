@@ -7,6 +7,7 @@ import com.bankingsystem.form.LoanTypeForm;
 import com.bankingsystem.service.LoanTypeService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoanTypeServiceImpl implements LoanTypeService {
@@ -34,8 +35,19 @@ public class LoanTypeServiceImpl implements LoanTypeService {
     }
 
     @Override
-    public List<LoanTypeEntity> getAllLoneTypes() throws SQLException {
-        return dao.getAllLoneTypes();
+    public List<LoanTypeForm> getAllLoneTypes() throws SQLException {
+        List<LoanTypeEntity> entities = dao.getAllLoneTypes(); // Fetch from DAO
+        List<LoanTypeForm> forms = new ArrayList<>();
+
+        for (LoanTypeEntity entity : entities) {
+            LoanTypeForm form = new LoanTypeForm();
+            form.setLoanTypeID(String.valueOf(entity.getLoanTypeID())); // Convert int to String
+            form.setTypeName(entity.getTypeName());
+            form.setInterestRate(String.valueOf(entity.getInterestRate())); // Convert double to String
+            forms.add(form);
+        }
+
+        return forms;
     }
     @Override
     public boolean deleteLoanType(String loanId)

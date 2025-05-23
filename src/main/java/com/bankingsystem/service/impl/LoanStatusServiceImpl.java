@@ -7,6 +7,7 @@ import com.bankingsystem.form.LoanStatusForm;
 import com.bankingsystem.service.LoanStatusService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoanStatusServiceImpl implements LoanStatusService {
@@ -37,8 +38,18 @@ public class LoanStatusServiceImpl implements LoanStatusService {
     }
 
     @Override
-    public List<LoanStatusEntity> getAllStatus() throws SQLException {
-        return loanStatusDao.getAllStatus();
+    public List<LoanStatusForm> getAllStatus() throws SQLException {
+        List<LoanStatusEntity> entities = loanStatusDao.getAllStatus(); // Fetch from DAO
+        List<LoanStatusForm> forms = new ArrayList<>();
+
+        for (LoanStatusEntity entity : entities) {
+            LoanStatusForm form = new LoanStatusForm();
+            form.setStatusId(String.valueOf(entity.getStatusId())); // Convert int to String
+            form.setStatusName(entity.getStatusName());
+            forms.add(form);
+        }
+
+        return forms;
     }
     @Override
     public boolean deleteStatus(String id) throws SQLException{

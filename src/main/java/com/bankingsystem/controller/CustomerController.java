@@ -31,7 +31,7 @@ public class CustomerController {
         {
             return service.getCustomer(custID);
         }
-        public List<CustomerEntity> getCustomers() throws SQLException {
+        public List<CustomerForm> getCustomers() throws SQLException {
             return service.getCustomers();
         }
         public boolean deleteCustomer(String id)

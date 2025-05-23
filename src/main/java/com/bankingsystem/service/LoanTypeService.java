@@ -13,7 +13,7 @@ public interface LoanTypeService {
 
     String getLoanType(String loanId);
 
-    List<LoanTypeEntity> getAllLoneTypes() throws SQLException;
+    List<LoanTypeForm> getAllLoneTypes() throws SQLException;
 
     boolean deleteLoanType(String loanId);
 }

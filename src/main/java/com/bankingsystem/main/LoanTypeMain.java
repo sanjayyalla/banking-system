@@ -67,13 +67,14 @@ public class LoanTypeMain {
                     System.out.println(loanTypeDetails);
                 }
                 break;
-                case 4:{
-                    List<LoanTypeEntity> loanTypes = controller.getAllLoneTypes();
-                    for (LoanTypeEntity loan : loanTypes) {
-                        System.out.println(loan.getLoanTypeID() + " " + loan.getTypeName()+" "+loan.getInterestRate());
-
+                case 4: {
+                    List<LoanTypeForm> loanTypes = controller.getAllLoneTypes();
+                    System.out.println("Loan Type ID\t Loan Type Name\t Interest Rate");
+                    for (LoanTypeForm loan : loanTypes) {
+                        System.out.println(loan.getLoanTypeID() + "\t\t\t\t" + loan.getTypeName() + "\t\t\t\t " + loan.getInterestRate());
                     }
                 }
+                break;
                 case 5:{
                     System.out.println("Enter loan type id to delete : ");
                     String id = sc.next();

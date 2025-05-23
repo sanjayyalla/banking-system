@@ -20,7 +20,7 @@ public class LoanTypeController {
     {
         return service.getLoanType(loanId);
     }
-    public List<LoanTypeEntity> getAllLoneTypes() throws SQLException {
+    public List<LoanTypeForm> getAllLoneTypes() throws SQLException {
         return service.getAllLoneTypes();
     }
     public boolean deleteLoanType(String loanId)

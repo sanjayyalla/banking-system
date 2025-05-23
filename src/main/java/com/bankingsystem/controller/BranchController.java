@@ -31,7 +31,7 @@ public class BranchController {
     {
         return service.getBranch(branchId);
     }
-    public List<BranchEntity> getAllBranches() throws SQLException {
+    public List<BranchForm> getAllBranches() throws SQLException {
         return service.getAllBranches();
     }
     public boolean deleteBranch(String branchId)

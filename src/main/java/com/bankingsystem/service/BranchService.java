@@ -10,6 +10,6 @@ public interface BranchService {
     public boolean addBranch(BranchForm form) throws SQLException;
     public boolean updateBranch(BranchForm form);
     public String getBranch(String branchId);
-    public List<BranchEntity> getAllBranches() throws SQLException;
+    public List<BranchForm> getAllBranches() throws SQLException;
     public boolean deleteBranch(String branchId);
 }

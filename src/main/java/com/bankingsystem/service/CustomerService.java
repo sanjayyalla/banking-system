@@ -14,7 +14,7 @@ public interface CustomerService {
 
     String getCustomer(String custID);
 
-    List<CustomerEntity> getCustomers() throws SQLException;
+    List<CustomerForm> getCustomers() throws SQLException;
 
     boolean deleteCustomer(String custID);
 }

@@ -10,6 +10,6 @@ public interface LoanStatusService {
     public boolean addStatus(LoanStatusForm loanStatusForm) throws SQLException;
     public boolean updateStatus(LoanStatusForm loanStatusForm) throws SQLException;
     public String getStatus(String id) throws SQLException;
-    public List<LoanStatusEntity> getAllStatus() throws SQLException;
+    public List<LoanStatusForm> getAllStatus() throws SQLException;
     public boolean deleteStatus(String id) throws SQLException;
 }

@@ -80,10 +80,10 @@ public class CustomerMain {
                 }
                 break;
                 case 4:
-                    List<CustomerEntity> customers = controller.getCustomers();
+                    List<CustomerForm> customers = controller.getCustomers();
                     System.out.println("CustID\tName\tEmail\tPhone\tAddress\tDOB");
 
-                    for (CustomerEntity customer : customers) {
+                    for (CustomerForm customer : customers) {
                         System.out.println(
                                 customer.getCustId() + "\t\t" +
                                         customer.getName() + "\t\t" +
@@ -94,6 +94,7 @@ public class CustomerMain {
                         );
                     }
                     break;
+
                 case 5:
                 {
                     System.out.println("Enter customer ID to delete : ");
