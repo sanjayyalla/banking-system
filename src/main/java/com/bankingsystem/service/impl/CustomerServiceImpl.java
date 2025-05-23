@@ -15,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     CustomerDao dao = new CustomerDaoImpl();
     @Override
-    public boolean addCustomer(CustomerForm form) throws ParseException, SQLException {
+    public int addCustomer(CustomerForm form) throws ParseException, SQLException {
         CustomerEntity entity = new CustomerEntity();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         entity.setName(form.getName());

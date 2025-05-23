@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CustomerDao {
 
-    boolean saveCustomer(CustomerEntity entity) throws SQLException;
+    int saveCustomer(CustomerEntity entity) throws SQLException;
 
     boolean updateCustomer(CustomerEntity entity);
 

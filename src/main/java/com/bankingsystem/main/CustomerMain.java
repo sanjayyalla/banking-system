@@ -33,11 +33,12 @@ public class CustomerMain {
                     form.setPhone(phone);
                     form.setAddress(address);
                     form.setDob(dob);
-                    boolean isInserted = controller.addCustomer(form);
-                    if (isInserted) {
-                        System.out.println("Inserted into DB");
-                    } else {
-                        System.out.println("Not Inserted");
+                    int generatedId = controller.addCustomer(form);
+                    if(generatedId!=0&&generatedId!=-1)
+                    {
+                        System.out.println("Customer created with Id : "+generatedId);
+                    }else{
+                        System.out.println("Customer not created");
                     }
                 }
                 break;

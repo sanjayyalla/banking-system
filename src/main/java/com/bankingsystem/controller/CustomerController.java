@@ -9,14 +9,14 @@ import java.util.List;
 public class CustomerController {
 
         CustomerService service = new CustomerServiceImpl();
-        public boolean addCustomer(CustomerForm form) throws SQLException, ParseException {
+        public int addCustomer(CustomerForm form) throws SQLException, ParseException {
 
             if(form.getName() != null &&form.getEmail() != null && form.getPhone() != null &&form.getAddress() != null && form.getDob() != null)
             {
 //                System.out.println("I am in service");
                 return service.addCustomer(form);
             }
-            return false;
+            return 0;
         }
 
         public boolean updateCustomer(CustomerForm form) throws ParseException {

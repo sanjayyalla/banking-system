@@ -34,8 +34,7 @@ public class LoanTypeDaoImpl implements LoanTypeDao {
         return rowsUpdated == 1;
     }
 
-    @Override
-    public String getLoanType(int loanId) {
+    public LoanTypeEntity getLoanType(int loanId) throws SQLException {
         String query = "SELECT * FROM Loan_Type WHERE loan_type_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -45,18 +44,15 @@ public class LoanTypeDaoImpl implements LoanTypeDao {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                int loanTypeId = rs.getInt("loan_type_id");
-                String typeName = rs.getString("type_name");
-                double interestRate = rs.getDouble("interest_rate");
-                return String.format("Loan Type{Loan type id =%d, Type name='%s', interest rate='%.2f'}",
-                        loanTypeId,typeName,interestRate);
-            } else {
-                return "Loan Type not found with ID: " + loanId;
+                LoanTypeEntity entity = new LoanTypeEntity();
+                entity.setLoanTypeID(rs.getInt("loan_type_id"));
+                entity.setTypeName(rs.getString("type_name"));
+                entity.setInterestRate(rs.getDouble("interest_rate"));
+                return entity;
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); // In production, use a logger
-            return "Error retrieving branch: " + e.getMessage();
         }
+
+        return null;
     }
 
     @Override

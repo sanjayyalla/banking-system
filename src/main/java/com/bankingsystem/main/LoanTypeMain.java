@@ -56,8 +56,16 @@ public class LoanTypeMain {
                 case 3: {
                     System.out.print("Enter loan type ID to get details : ");
                     String loanTypeId = sc.next();
-                    String loanTypeDetails = controller.getLoanType(loanTypeId);
-                    System.out.println(loanTypeDetails);
+                    LoanTypeForm loan = controller.getLoanType(loanTypeId);
+
+                    if (loan != null) {
+                        System.out.println("Loan Type Details:");
+                        System.out.println("ID: " + loan.getLoanTypeID());
+                        System.out.println("Name: " + loan.getTypeName());
+                        System.out.println("Interest Rate: " + loan.getInterestRate());
+                    } else {
+                        System.out.println("Loan Type not found.");
+                    }
                 }
                 break;
                 case 4: {

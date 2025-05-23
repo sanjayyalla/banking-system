@@ -2,28 +2,45 @@ package com.bankingsystem.dao.impl;
 import com.bankingsystem.dao.CustomerDao;
 import com.bankingsystem.entity.CustomerEntity;
 import com.bankingsystem.util.DBConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDao {
 
     @Override
-    public boolean saveCustomer(CustomerEntity entity) throws SQLException {
-        String query = "Insert into Customer(name,email,phone,address,dob) VALUES (?,?,?,?,?)";
-        Connection conn = DBConnection.getConnection();
-        PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, entity.getName());
-        statement.setString(2, entity.getEmail());
-        statement.setString(3, entity.getPhone());
-        statement.setString(4, entity.getAddress());
-        statement.setDate(5,entity.getDob());
-        int isRowInserted = statement.executeUpdate();
-        return isRowInserted == 1;
+    public int saveCustomer(CustomerEntity entity) throws SQLException {
+        String query = "INSERT INTO Customer(name, email, phone, address, dob) VALUES (?, ?, ?, ?, ?)";
+        int generatedId = -1;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setString(1, entity.getName());
+            statement.setString(2, entity.getEmail());
+            statement.setString(3, entity.getPhone());
+            statement.setString(4, entity.getAddress());
+            statement.setDate(5, entity.getDob());
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating customer failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getInt(1); // Get the auto-generated ID
+                } else {
+                    throw new SQLException("Creating customer failed, no ID obtained.");
+                }
+            }
+        }
+
+        return generatedId;
     }
+
 
     @Override
     public boolean updateCustomer(CustomerEntity entity) {
@@ -69,7 +86,7 @@ public class CustomerDaoImpl implements CustomerDao {
                 return String.format("Branch{cust_id=%d, name='%s', email='%s', phone='%s', address='%s', dob='%s'}",
                         id, name, email, phone, address,dob);
             } else {
-                return "Branch not found with ID: " + custID;
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace(); // In production, use a logger

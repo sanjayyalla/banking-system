@@ -16,8 +16,7 @@ public class LoanTypeController {
         return service.updateLoanType(form);
     }
 
-    public String getLoanType(String loanId)
-    {
+    public LoanTypeForm getLoanType(String loanId) {
         return service.getLoanType(loanId);
     }
 

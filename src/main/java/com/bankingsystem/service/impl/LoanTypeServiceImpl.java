@@ -29,8 +29,25 @@ public class LoanTypeServiceImpl implements LoanTypeService {
     }
 
     @Override
-    public String getLoanType(String loanId) {
-        return dao.getLoanType(Integer.parseInt(loanId));
+    public LoanTypeForm getLoanType(String loanId) {
+        try {
+            int id = Integer.parseInt(loanId);
+            LoanTypeEntity entity = dao.getLoanType(id);
+
+            if (entity == null) return null;
+
+            LoanTypeForm form = new LoanTypeForm();
+            form.setLoanTypeID(String.valueOf(entity.getLoanTypeID()));
+            form.setTypeName(entity.getTypeName());
+            form.setInterestRate(String.format("%.2f", entity.getInterestRate()));
+            return form;
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

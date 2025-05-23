@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    boolean addCustomer(CustomerForm form) throws ParseException, SQLException;
+    int addCustomer(CustomerForm form) throws ParseException, SQLException;
 
     boolean updateCustomer(CustomerForm form) throws ParseException;
 

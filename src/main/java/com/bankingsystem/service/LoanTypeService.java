@@ -9,7 +9,7 @@ public interface LoanTypeService {
 
     boolean updateLoanType(LoanTypeForm form) throws SQLException;
 
-    String getLoanType(String loanId);
+    LoanTypeForm getLoanType(String loanTypeId);
 
     List<LoanTypeForm> getAllLoneTypes() throws SQLException;
 

@@ -10,7 +10,7 @@ public interface LoanTypeDao {
 
     boolean updateLoanType(LoanTypeEntity entity) throws SQLException;
 
-    String getLoanType(int loanId);
+    LoanTypeEntity getLoanType(int loanId) throws SQLException;
 
     List<LoanTypeEntity> getAllLoneTypes() throws SQLException;
 
