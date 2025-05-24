@@ -63,7 +63,7 @@ public class BranchDaoImpl implements BranchDao {
                 String city = rs.getString("city");
                 String state = rs.getString("state");
 
-                return String.format("Branch{id=%d, name='%s', address='%s', city='%s', state='%s'}",
+                return String.format("Branch{\n\tid=%d, \n\tname='%s', \n\taddress='%s', \n\tcity='%s', \n\tstate='%s'\n}",
                         id, name, address, city, state);
             } else {
                 return "Branch not found with ID: " + branchId;

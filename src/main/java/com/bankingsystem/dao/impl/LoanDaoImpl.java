@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoanDaoImpl implements LoanDao {
 
@@ -105,4 +107,44 @@ public class LoanDaoImpl implements LoanDao {
         }
         return null;
     }
+
+    @Override
+    public List<LoanResponseForm> getAllLoanDetails() {
+        List<LoanResponseForm> loanList = new ArrayList<>();
+
+        String sql = "SELECT l.loan_id, c.name as customer_name, lt.type_name as loan_type_name, " +
+                "b.name as branch_name, s.status_name, l.principal_amount, l.interest_rate, " +
+                "l.term_months, l.start_date, l.end_date " +
+                "FROM Loan l " +
+                "JOIN Customer c ON l.customer_id = c.cust_id " +
+                "JOIN Loan_Type lt ON l.loan_type_id = lt.loan_type_id " +
+                "JOIN Branch b ON l.branch_id = b.branch_id " +
+                "JOIN Loan_Status s ON l.status_id = s.status_id";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                LoanResponseForm resp = new LoanResponseForm();
+                resp.setLoanId(String.valueOf(rs.getInt("loan_id")));
+                resp.setCustomerName(rs.getString("customer_name"));
+                resp.setLoanTypeName(rs.getString("loan_type_name"));
+                resp.setBranchName(rs.getString("branch_name"));
+                resp.setStatusName(rs.getString("status_name"));
+                resp.setPrincipalAmount(rs.getString("principal_amount"));
+                resp.setInterestRate(rs.getString("interest_rate"));
+                resp.setTermMonths(rs.getString("term_months"));
+                resp.setStartDate(String.valueOf(rs.getDate("start_date")));
+                resp.setEndDate(String.valueOf(rs.getDate("end_date")));
+
+                loanList.add(resp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return loanList;
+    }
+
 }

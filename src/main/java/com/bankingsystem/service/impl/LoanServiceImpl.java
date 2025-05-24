@@ -19,6 +19,7 @@ import com.bankingsystem.service.LoanTypeService;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
 
 public class LoanServiceImpl implements LoanService {
@@ -109,13 +110,21 @@ public class LoanServiceImpl implements LoanService {
         entity.setInterestRate(interestRate);
         return dao.updateLoan(entity);
     }
+
     public boolean deleteLoan(String loanId)
     {
         return dao.removeLoan(Integer.parseInt(loanId));
     }
+
     @Override
     public LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception {
         return dao.getLoanDetailById(request);
+    }
+
+    @Override
+    public List<LoanResponseForm> getAllLoanDetails()
+    {
+        return dao.getAllLoanDetails();
     }
 
 }

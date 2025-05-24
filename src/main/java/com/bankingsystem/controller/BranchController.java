@@ -10,7 +10,7 @@ public class BranchController {
     BranchService service = new BranchServiceImpl();
 
     public boolean addBranch(BranchForm form) throws SQLException {
-        if(form.getBranchId()!=null && form.getName()!=null && form.getCity()!=null && form.getAddress()!=null && form.getState()!=null)
+        if( form.getName()!=null && form.getCity()!=null && form.getAddress()!=null && form.getState()!=null)
         {
             return service.addBranch(form);
         }

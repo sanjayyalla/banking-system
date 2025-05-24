@@ -6,6 +6,7 @@ import com.bankingsystem.form.LoanResponseForm;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 public interface LoanService {
 
@@ -13,6 +14,7 @@ public interface LoanService {
     boolean updateLoan(LoanForm form);
     boolean deleteLoan(String loanId);
     LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception;
+    List<LoanResponseForm> getAllLoanDetails();
 }
 
 

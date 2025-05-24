@@ -8,6 +8,7 @@ import com.bankingsystem.service.impl.LoanServiceImpl;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 public class LoanController {
     LoanService service = new LoanServiceImpl();
@@ -27,5 +28,9 @@ public class LoanController {
     }
     public LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception {
         return service.getLoanDetailById(request);
+    }
+
+    public List<LoanResponseForm> getAllLoanDetails() {
+        return service.getAllLoanDetails();
     }
 }
