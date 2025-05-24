@@ -9,6 +9,8 @@ import com.bankingsystem.entity.LoanEntity;
 import com.bankingsystem.entity.LoanTypeEntity;
 import com.bankingsystem.form.CustomerForm;
 import com.bankingsystem.form.LoanForm;
+import com.bankingsystem.form.LoanRequestForm;
+import com.bankingsystem.form.LoanResponseForm;
 import com.bankingsystem.form.LoanTypeForm;
 import com.bankingsystem.service.CustomerService;
 import com.bankingsystem.service.LoanService;
@@ -110,6 +112,10 @@ public class LoanServiceImpl implements LoanService {
     public boolean deleteLoan(String loanId)
     {
         return dao.removeLoan(Integer.parseInt(loanId));
+    }
+    @Override
+    public LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception {
+        return dao.getLoanDetailById(request);
     }
 
 }

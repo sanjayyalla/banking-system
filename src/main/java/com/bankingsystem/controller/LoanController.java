@@ -1,6 +1,8 @@
 package com.bankingsystem.controller;
 
 import com.bankingsystem.form.LoanForm;
+import com.bankingsystem.form.LoanRequestForm;
+import com.bankingsystem.form.LoanResponseForm;
 import com.bankingsystem.service.LoanService;
 import com.bankingsystem.service.impl.LoanServiceImpl;
 
@@ -22,5 +24,8 @@ public class LoanController {
             return service.deleteLoan(loanId);
         }
         return false;
+    }
+    public LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception {
+        return service.getLoanDetailById(request);
     }
 }

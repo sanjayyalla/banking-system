@@ -2,6 +2,8 @@ package com.bankingsystem.main;
 
 import com.bankingsystem.controller.LoanController;
 import com.bankingsystem.form.LoanForm;
+import com.bankingsystem.form.LoanRequestForm;
+import com.bankingsystem.form.LoanResponseForm;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -12,7 +14,7 @@ public class LoanMain {
         LoanController controller = new LoanController();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("1. Add loan 2.Update Loan 4.Delete Loan");
+            System.out.println("1. Add loan 2.Update Loan 3.Get Loan Details By ID 4.Delete Loan");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1: {
@@ -61,6 +63,33 @@ public class LoanMain {
                         System.out.println("Loan details updated");
                     }else{
                         System.out.println("Loan details not updated");
+                    }
+                }
+                break;
+                case 3: {
+                    System.out.print("Enter Loan ID to get details: ");
+                    String loanId = sc.next();
+                    LoanRequestForm request = new LoanRequestForm();
+                    request.setLoanId(loanId);
+                    try {
+                        LoanResponseForm response = controller.getLoanDetailById(request);
+                        if (response != null) {
+                            System.out.println("Loan Details:");
+                            System.out.println("Loan ID: " + response.getLoanId());
+                            System.out.println("Customer Name: " + response.getCustomerName());
+                            System.out.println("Loan Type: " + response.getLoanTypeName());
+                            System.out.println("Branch: " + response.getBranchName());
+                            System.out.println("Status: " + response.getStatusName());
+                            System.out.println("Principal Amount: " + response.getPrincipalAmount());
+                            System.out.println("Interest Rate: " + response.getInterestRate());
+                            System.out.println("Term Months: " + response.getTermMonths());
+                            System.out.println("Start Date: " + response.getStartDate());
+                            System.out.println("End Date: " + response.getEndDate());
+                        } else {
+                            System.out.println("Loan not found.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error fetching loan details: " + e.getMessage());
                     }
                 }
                 break;

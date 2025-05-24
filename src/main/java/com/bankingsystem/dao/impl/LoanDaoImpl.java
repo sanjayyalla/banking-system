@@ -3,10 +3,13 @@ package com.bankingsystem.dao.impl;
 import com.bankingsystem.dao.LoanDao;
 import com.bankingsystem.entity.LoanEntity;
 import com.bankingsystem.entity.LoanStatusEntity;
+import com.bankingsystem.form.LoanRequestForm;
+import com.bankingsystem.form.LoanResponseForm;
 import com.bankingsystem.util.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoanDaoImpl implements LoanDao {
@@ -68,5 +71,38 @@ public class LoanDaoImpl implements LoanDao {
             System.err.println("Error deleting loan: " + e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception {
+        String sql = "SELECT l.loan_id, c.name as customer_name, lt.type_name as loan_type_name, " +
+                "b.name as branch_name, s.status_name, l.principal_amount, l.interest_rate, " +
+                "l.term_months, l.start_date, l.end_date " +
+                "FROM Loan l " +
+                "JOIN Customer c ON l.customer_id = c.cust_id " +
+                "JOIN Loan_Type lt ON l.loan_type_id = lt.loan_type_id " +
+                "JOIN Branch b ON l.branch_id = b.branch_id " +
+                "JOIN Loan_Status s ON l.status_id = s.status_id " +
+                "WHERE l.loan_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, Integer.parseInt(request.getLoanId()));
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                LoanResponseForm resp = new LoanResponseForm();
+                resp.setLoanId(String.valueOf(rs.getInt("loan_id")));
+                resp.setCustomerName(rs.getString("customer_name"));
+                resp.setLoanTypeName(rs.getString("loan_type_name"));
+                resp.setBranchName(rs.getString("branch_name"));
+                resp.setStatusName(rs.getString("status_name"));
+                resp.setPrincipalAmount(rs.getString("principal_amount"));
+                resp.setInterestRate(rs.getString("interest_rate"));
+                resp.setTermMonths(rs.getString("term_months"));
+                resp.setStartDate(String.valueOf(rs.getDate("start_date")));
+                resp.setEndDate(String.valueOf(rs.getDate("end_date")));
+                return resp;
+            }
+        }
+        return null;
     }
 }
