@@ -11,10 +11,11 @@ import java.util.List;
 public interface LoanService {
 
     String addLoan(LoanForm form) throws ParseException, SQLException;
-    boolean updateLoan(LoanForm form);
+    boolean updateLoan(LoanForm form) throws SQLException;
     boolean deleteLoan(String loanId);
     LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception;
     List<LoanResponseForm> getAllLoanDetails();
+    boolean processLoan(LoanForm form) throws Exception;
 }
 
 

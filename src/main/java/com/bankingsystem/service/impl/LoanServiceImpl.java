@@ -16,9 +16,11 @@ import com.bankingsystem.service.CustomerService;
 import com.bankingsystem.service.LoanService;
 import com.bankingsystem.service.LoanTypeService;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -83,7 +85,7 @@ public class LoanServiceImpl implements LoanService {
         loanEntity.setBranchId(Integer.parseInt(form.getBranchId()));
         loanEntity.setStatusId(Integer.parseInt(form.getStatusId()));
         loanEntity.setPrincipalAmount(Double.parseDouble(form.getPricipalAmount()));
-
+        loanEntity.setTermMonths(Integer.parseInt(form.getTermMonths()));
         LoanTypeService loanTypeService = new LoanTypeServiceImpl();
         LoanTypeForm loanTypeForm = loanTypeService.getLoanType(form.getLoanTypeId());
         double interestRate = Double.parseDouble(loanTypeForm.getInterestRate());
@@ -94,7 +96,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
 
-    public boolean updateLoan(LoanForm form) {
+    public boolean updateLoan(LoanForm form) throws SQLException {
         LoanEntity entity = new LoanEntity();
         LoanTypeService loanTypeService = new LoanTypeServiceImpl();
         entity.setLoanId(Integer.parseInt(form.getLoanId()));
@@ -121,5 +123,35 @@ public class LoanServiceImpl implements LoanService {
     public List<LoanResponseForm> getAllLoanDetails() {
         return dao.getAllLoanDetails();
     }
+
+    @Override
+    public boolean processLoan(LoanForm form) throws Exception {
+
+        LoanRequestForm requestForm = new LoanRequestForm();
+        requestForm.setLoanId(form.getLoanId());
+        LoanResponseForm responseForm = dao.getLoanDetailById(requestForm);
+
+        LoanEntity updateEntity = new LoanEntity();
+        updateEntity.setLoanId(Integer.parseInt(form.getLoanId()));
+        int termMonths = Integer.parseInt(responseForm.getTermMonths());
+        String statusName = responseForm.getStatusName();
+        if(statusName.equals("REQUESTED"))
+        {
+            updateEntity.setStatusId(3);
+            LocalDate startLocalDate = LocalDate.now();
+            LocalDate endLocalDate = startLocalDate.plusMonths(termMonths);
+            Date startDate = Date.valueOf(startLocalDate);
+            Date endDate = Date.valueOf(endLocalDate);
+            updateEntity.setStartDate(startDate);
+            updateEntity.setEndDate(endDate);
+            boolean isUpdated = dao.updateLoan(updateEntity);
+            if(isUpdated)
+                return true;
+            return false;
+        }
+        return true;
+
+    }
+
 
 }

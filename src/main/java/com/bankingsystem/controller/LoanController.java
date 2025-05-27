@@ -20,7 +20,7 @@ public class LoanController {
         return null;
     }
 
-    public boolean updateLoan(LoanForm form) {
+    public boolean updateLoan(LoanForm form) throws SQLException {
         return service.updateLoan(form);
     }
 
@@ -37,5 +37,13 @@ public class LoanController {
 
     public List<LoanResponseForm> getAllLoanDetails() {
         return service.getAllLoanDetails();
+    }
+
+    public boolean processLoan(LoanForm form) throws Exception {
+        if(form.getLoanId()!=null && !form.getLoanId().isEmpty())
+        {
+            return service.processLoan(form);
+        }
+        return false;
     }
 }

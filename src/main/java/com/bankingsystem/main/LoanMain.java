@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LoanMain {
-    public static void main(String[] args) throws SQLException, ParseException {
+    public static void main(String[] args) throws Exception {
         LoanController controller = new LoanController();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("1. Add loan 2.Update Loan 3.Get Loan Details By ID 4.Get All Loan details 5.Delete Loan");
+            System.out.println("1. Add loan 2.Update Loan 3.Get Loan Details By ID 4.Get All Loan details 5.Delete Loan 6.Process Loan");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1: {
@@ -35,6 +35,9 @@ public class LoanMain {
                     System.out.println("Enter principal amount :");
                     String principalAmount = sc.next();
                     form.setPricipalAmount(principalAmount);
+                    System.out.println("Enter term months :");
+                    String termMonths = sc.next();
+                    form.setTermMonths(termMonths);
 
                     form.setStatusId(statusId);
                     String res = controller.addLoan(form);
@@ -43,28 +46,61 @@ public class LoanMain {
                     break;
                 case 2: {
                     LoanForm form1 = new LoanForm();
-                    System.out.print("Enter loan id to update:");
-                    String loanId = sc.next();
+                    Scanner scLine = new Scanner(System.in);
+                    System.out.print("Enter loan id to update: ");
+                    String loanId = scLine.nextLine();
                     form1.setLoanId(loanId);
-                    System.out.println("Enter loan type id: ");
-                    String loanTypeId = sc.next();
-                    form1.setLoanTypeId(loanTypeId);
-                    System.out.println("Enter branch id:");
-                    String branchId = sc.next();
-                    form1.setBranchId(branchId);
-                    System.out.println("Enter status id:");
-                    String statusId = sc.next();
-                    form1.setStatusId(statusId);
-                    System.out.println("Enter principal amount ");
-                    String principalAmount = sc.next();
-                    form1.setPricipalAmount(principalAmount);
+
+                    System.out.print("Enter loan type id : ");
+                    String loanTypeId = scLine.nextLine();
+                    if (!loanTypeId.isEmpty()) {
+                        form1.setLoanTypeId(loanTypeId);
+                    }
+
+                    System.out.print("Enter branch id : ");
+                    String branchId = scLine.nextLine();
+                    if (!branchId.isEmpty()) {
+                        form1.setBranchId(branchId);
+                    }
+
+                    System.out.print("Enter status id : ");
+                    String statusId = scLine.nextLine();
+                    if (!statusId.isEmpty()) {
+                        form1.setStatusId(statusId);
+                    }
+
+                    System.out.print("Enter principal amount : ");
+                    String principalAmount = scLine.nextLine();
+                    if (!principalAmount.isEmpty()) {
+                        form1.setPricipalAmount(principalAmount);
+                    }
+
+
+                    System.out.print("Enter term months : ");
+                    String termMonths = scLine.nextLine();
+                    if (!termMonths.isEmpty()) {
+                        form1.setTermMonths(termMonths);
+                    }
+
+                    System.out.print("Enter start date (yyyy-mm-dd): ");
+                    String startDate = scLine.nextLine();
+                    if (!startDate.isEmpty()) {
+                        form1.setStartDate(startDate);
+                    }
+
+                    System.out.print("Enter end date (yyyy-mm-dd): ");
+                    String endDate = scLine.nextLine();
+                    if (!endDate.isEmpty()) {
+                        form1.setEndDate(endDate);
+                    }
+
                     boolean isUpdated = controller.updateLoan(form1);
-                    if(isUpdated)
-                    {
+                    if (isUpdated) {
                         System.out.println("Loan details updated");
-                    }else{
+                    } else {
                         System.out.println("Loan details not updated");
                     }
+
                 }
                 break;
                 case 3: {
@@ -124,6 +160,19 @@ public class LoanMain {
                     }
                 }
                 break;
+                case 6:{
+                    LoanForm form = new LoanForm();
+                    System.out.println("Enter loan id to process : ");
+                    String loanId = sc.next();
+                    form.setLoanId(loanId);
+                    boolean isUpdated = controller.processLoan(form);
+                    if(isUpdated)
+                    {
+                        System.out.println("Updation success");
+                    }else{
+                        System.out.println("Updation failed");
+                    }
+                }
 
             }
         }

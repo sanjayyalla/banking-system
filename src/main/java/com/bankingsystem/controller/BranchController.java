@@ -17,8 +17,7 @@ public class BranchController {
         return false;
     }
 
-    public boolean updateBranch(BranchForm form)
-    {
+    public boolean updateBranch(BranchForm form) {
         if(form.getBranchId()!=null && form.getName()!=null && form.getCity()!=null && form.getAddress()!=null && form.getState()!=null)
         {
             return service.updateBranch(form);
@@ -35,8 +34,7 @@ public class BranchController {
         return service.getAllBranches();
     }
 
-    public boolean deleteBranch(String branchId)
-    {
+    public boolean deleteBranch(String branchId) {
         if(branchId!=null && !branchId.isEmpty())
         {
             return service.deleteBranch(branchId);

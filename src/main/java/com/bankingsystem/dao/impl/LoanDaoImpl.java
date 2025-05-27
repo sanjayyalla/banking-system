@@ -6,11 +6,9 @@ import com.bankingsystem.form.LoanRequestForm;
 import com.bankingsystem.form.LoanResponseForm;
 import com.bankingsystem.util.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoanDaoImpl implements LoanDao {
@@ -18,7 +16,7 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public String addLoan(LoanEntity entity) throws SQLException {
 
-            String query = "Insert into Loan(customer_id,loan_type_id,branch_id,status_id,principal_amount,interest_rate) VALUES (?,?,?,?,?,?)";
+            String query = "Insert into Loan(customer_id,loan_type_id,branch_id,status_id,principal_amount,interest_rate,term_months) VALUES (?,?,?,?,?,?,?)";
             Connection conn = DBConnection.getConnection();
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, entity.getCustomerId());
@@ -27,7 +25,7 @@ public class LoanDaoImpl implements LoanDao {
             statement.setInt(4,entity.getStatusId());
             statement.setDouble(5,entity.getPrincipalAmount());
             statement.setDouble(6,entity.getInterestRate());
-
+            statement.setInt(7,entity.getTermMonths());
             int isRowInserted = statement.executeUpdate();
             if(isRowInserted==1)
             {
@@ -37,23 +35,59 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public boolean updateLoan(LoanEntity entity) {
-        String query = "UPDATE Loan SET loan_type_id = ?, branch_id = ?, status_id = ?, principal_amount = ?,interest_rate = ? WHERE loan_id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-//            System.out.println("I am here");
-            statement.setInt(1, entity.getLoanTypeId());
-            statement.setInt(2, entity.getBranchId());
-            statement.setInt(3, entity.getStatusId());
-            statement.setDouble(4, entity.getPrincipalAmount());
-            statement.setDouble(5, entity.getInterestRate());
-            statement.setInt(6,entity.getLoanId());
+    public boolean updateLoan(LoanEntity entity) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        int customerID = entity.getCustomerId();
+        int loanTypeID = entity.getLoanTypeId();
+        int branchID = entity.getBranchId();
+        int statusID = entity.getStatusId();
+        double interestRate = entity.getInterestRate();
+        double principalAmount = entity.getPrincipalAmount();
+        int termMonths = entity.getTermMonths();
+        Date startDate = entity.getStartDate();
+        Date endDate = entity.getEndDate();
 
-            int rowsUpdated = statement.executeUpdate();
-            return rowsUpdated == 1;
+        StringBuilder query = new StringBuilder("update loan set ");
+        if (customerID != 0) {
+            query.append(String.format("customer_id=%d,", customerID));
+        }
+        if (loanTypeID != 0) {
+            query.append(String.format("loan_type_id=%d,", loanTypeID));
+        }
+        if (branchID != 0) {
+            query.append(String.format("branch_id=%d,", branchID));
+        }
+        if (statusID != 0) {
+            query.append(String.format("status_id=%d,", statusID));
+        }
+        if (principalAmount != 0.0d) {
+            query.append(String.format("principal_amount=%.2f,", principalAmount));
+        }
+        if (interestRate != 0.0d) {
+            query.append(String.format("interest_rate=%.2f,", interestRate));
+        }
+        if (principalAmount != 0.0d) {
+            query.append(String.format("principal_amount=%.2f,", principalAmount));
+        }
+        if (termMonths != 0) {
+            query.append(String.format("term_months=%d,", termMonths));
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        if (startDate != null) {
+            query.append(String.format("start_date='%s',", new java.sql.Date(startDate.getTime())));
+        }
+        if (endDate != null) {
+            query.append(String.format("end_date='%s',", new java.sql.Date(endDate.getTime())));
+        }
+
+        query.setLength(query.length() - 1);
+        query.append(String.format(" where loan_id=%d;", entity.getLoanId()));
+        try {
+            Statement stmt = conn.createStatement();
+            int result = stmt.executeUpdate(query.toString());
+            return result != 0;
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
@@ -144,6 +178,11 @@ public class LoanDaoImpl implements LoanDao {
         }
 
         return loanList;
+    }
+
+    public boolean processLoan(int id)
+    {
+        return false;
     }
 
 }
