@@ -12,7 +12,7 @@ public class LoanPaymentMain {
         Scanner sc = new Scanner(System.in);
         while (true)
         {
-            System.out.println("1. Add Loan EMI Payment 2.Get all Loan Payment Details 3.Save all loan payment details to TXT file");
+            System.out.println("1. Add Loan EMI Payment 2.Get all Loan Payment Details 3.Save all loan payment details to TXT file 4. Delete payment through ID");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1: {
@@ -54,7 +54,17 @@ public class LoanPaymentMain {
                     }
                 }
                 break;
-
+                case 4:{
+                    System.out.println("Enter payment id : ");
+                    String paymentId = sc.next();
+                    boolean isDeleted = controller.deleteLoanPayment(paymentId);
+                    if(isDeleted){
+                        System.out.println("Deleted the payment");
+                    }else{
+                        System.out.println("Payment deletion failed");
+                    }
+                }
+                break;
                 default:
                     System.out.println("Invalid choice.");
             }

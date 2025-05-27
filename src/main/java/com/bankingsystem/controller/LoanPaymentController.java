@@ -25,4 +25,12 @@ public class LoanPaymentController {
     {
         return service.getAllLoanPayments();
     }
+
+    public boolean deleteLoanPayment(String paymentId) {
+        if(paymentId!=null && !paymentId.isEmpty())
+        {
+            return service.deleteLoanPayment(paymentId);
+        }
+        return false;
+    }
 }

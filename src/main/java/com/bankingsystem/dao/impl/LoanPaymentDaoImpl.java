@@ -106,6 +106,18 @@ public class LoanPaymentDaoImpl implements LoanPaymentDao {
         }
     }
 
+    @Override
+    public boolean deleteLoanPayment(int paymentId) {
+        String query = "DELETE FROM Loan_Payment where payment_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1,paymentId );
+            int rowsDeleted = statement.executeUpdate();
 
+            return rowsDeleted == 1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

@@ -72,4 +72,9 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
 
         return forms;
     }
+
+    @Override
+    public boolean deleteLoanPayment(String paymentId) {
+        return dao.deleteLoanPayment(Integer.parseInt(paymentId));
+    }
 }
