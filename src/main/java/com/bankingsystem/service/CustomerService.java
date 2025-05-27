@@ -10,7 +10,7 @@ public interface CustomerService {
 
     boolean updateCustomer(CustomerForm form) throws ParseException;
 
-    String getCustomer(String custID);
+    CustomerForm getCustomer(String custID);
 
     List<CustomerForm> getCustomers() throws SQLException;
 

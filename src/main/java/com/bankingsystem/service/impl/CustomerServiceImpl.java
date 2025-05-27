@@ -46,9 +46,24 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String getCustomer(String custID) {
-        return dao.getCustomer(Integer.parseInt(custID));
+    public CustomerForm getCustomer(String custID) {
+        CustomerEntity entity = dao.getCustomer(Integer.parseInt(custID));
+
+        if (entity == null) {
+            return null;
+        }
+
+        CustomerForm form = new CustomerForm();
+        form.setCustId(String.valueOf(entity.getCustId()));
+        form.setName(entity.getName());
+        form.setEmail(entity.getEmail());
+        form.setPhone(entity.getPhone());
+        form.setAddress(entity.getAddress());
+        form.setDob(entity.getDob().toString());
+
+        return form;
     }
+
 
     @Override
     public List<CustomerForm> getCustomers() throws SQLException {

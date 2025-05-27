@@ -73,8 +73,19 @@ public class CustomerMain {
                 case 3: {
                     System.out.println("Enter id to get customer details : ");
                     String custId = sc.next();
-                    String customer = controller.getCustomer(custId);
-                    System.out.println(customer);
+                    CustomerForm customer = controller.getCustomer(custId);
+
+                    if (customer != null) {
+                        System.out.println("Customer Details:");
+                        System.out.println("ID      : " + customer.getCustId());
+                        System.out.println("Name    : " + customer.getName());
+                        System.out.println("Email   : " + customer.getEmail());
+                        System.out.println("Phone   : " + customer.getPhone());
+                        System.out.println("Address : " + customer.getAddress());
+                        System.out.println("DOB     : " + customer.getDob());
+                    } else {
+                        System.out.println("Customer not found for ID: " + custId);
+                    }
                 }
                 break;
                 case 4:

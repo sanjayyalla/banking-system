@@ -65,7 +65,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public String getCustomer(int custID) {
+    public CustomerEntity getCustomer(int custID) {
         String query = "SELECT * FROM Customer WHERE cust_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -75,24 +75,24 @@ public class CustomerDaoImpl implements CustomerDao {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                int id = rs.getInt("cust_id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String address = rs.getString("address");
-                String dob = String.valueOf(rs.getDate("dob"));
+                CustomerEntity customer = new CustomerEntity();
+                customer.setCustId(rs.getInt("cust_id"));
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setAddress(rs.getString("address"));
+                customer.setDob(rs.getDate("dob")); // This is already a java.sql.Date
 
-
-                return String.format("Branch{cust_id=%d, name='%s', email='%s', phone='%s', address='%s', dob='%s'}",
-                        id, name, email, phone, address,dob);
+                return customer;
             } else {
                 return null;
             }
         } catch (SQLException e) {
             e.printStackTrace(); // In production, use a logger
-            return "Error retrieving branch: " + e.getMessage();
+            return null;
         }
     }
+
 
     @Override
     public List<CustomerEntity> getCustomers() throws SQLException {

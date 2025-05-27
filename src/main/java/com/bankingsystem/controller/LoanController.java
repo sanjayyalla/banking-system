@@ -12,20 +12,25 @@ import java.util.List;
 
 public class LoanController {
     LoanService service = new LoanServiceImpl();
+
     public String addLoan(LoanForm form) throws SQLException, ParseException {
-        return  service.addLoan(form);
+        if (form.getLoanTypeId() != null && form.getBranchId() != null && form.getStatusId() != null && form.getPricipalAmount() != null) {
+            return service.addLoan(form);
+        }
+        return null;
     }
-    public boolean updateLoan(LoanForm form){
+
+    public boolean updateLoan(LoanForm form) {
         return service.updateLoan(form);
     }
-    public boolean deleteLoan(String loanId)
-    {
-        if(loanId!=null && !loanId.isEmpty())
-        {
+
+    public boolean deleteLoan(String loanId) {
+        if (loanId != null && !loanId.isEmpty()) {
             return service.deleteLoan(loanId);
         }
         return false;
     }
+
     public LoanResponseForm getLoanDetailById(LoanRequestForm request) throws Exception {
         return service.getLoanDetailById(request);
     }

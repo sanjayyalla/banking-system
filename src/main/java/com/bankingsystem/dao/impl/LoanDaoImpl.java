@@ -2,7 +2,6 @@ package com.bankingsystem.dao.impl;
 
 import com.bankingsystem.dao.LoanDao;
 import com.bankingsystem.entity.LoanEntity;
-import com.bankingsystem.entity.LoanStatusEntity;
 import com.bankingsystem.form.LoanRequestForm;
 import com.bankingsystem.form.LoanResponseForm;
 import com.bankingsystem.util.DBConnection;

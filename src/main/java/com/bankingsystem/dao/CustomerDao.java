@@ -12,7 +12,7 @@ public interface CustomerDao {
 
     boolean updateCustomer(CustomerEntity entity);
 
-    String getCustomer(int custID);
+    CustomerEntity getCustomer(int custID);
 
     List<CustomerEntity> getCustomers() throws SQLException;
 

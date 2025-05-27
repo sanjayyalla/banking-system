@@ -27,77 +27,74 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public String addLoan(LoanForm form) throws ParseException, SQLException {
+
         CustomerService service = new CustomerServiceImpl();
-        String returnedString = service.getCustomer(form.getCustomerId());
+        CustomerForm customer = service.getCustomer(form.getCustomerId());
         LoanEntity loanEntity = new LoanEntity();
-        if(returnedString==null)
-        {
-            System.out.println("Customer not found with this id do you want to create new customer(y/n)");
+        if (customer == null) {
+            System.out.println("Customer not found with this ID. Do you want to create a new customer? (y/n)");
             Scanner sc = new Scanner(System.in);
             char option = sc.next().charAt(0);
-            switch (option)
-            {
-                case 'y':
+
+            switch (option) {
+                case 'y': {
                     CustomerForm customerForm = new CustomerForm();
-                    System.out.print("Enter customer name:");
-                    String name = sc.next();
-                    System.out.print("Enter email:");
-                    String email = sc.next();
-                    System.out.print("Enter phone:");
-                    String phone = sc.next();
-                    System.out.print("Enter address:");
-                    String address = sc.next();
-                    System.out.print("Enter DOB:(yyyy-mm-dd)");
-                    String dob = sc.next();
-                    customerForm.setName(name);
-                    customerForm.setEmail(email);
-                    customerForm.setPhone(phone);
-                    customerForm.setAddress(address);
-                    customerForm.setDob(dob);
+                    System.out.print("Enter customer name: ");
+                    customerForm.setName(sc.next());
+                    System.out.print("Enter email: ");
+                    customerForm.setEmail(sc.next());
+                    System.out.print("Enter phone: ");
+                    customerForm.setPhone(sc.next());
+                    System.out.print("Enter address: ");
+                    customerForm.setAddress(sc.next());
+                    System.out.print("Enter DOB (yyyy-mm-dd): ");
+                    customerForm.setDob(sc.next());
 
                     CustomerEntity entity = new CustomerEntity();
-                    CustomerDao customerDao = new CustomerDaoImpl();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     entity.setName(customerForm.getName());
                     entity.setEmail(customerForm.getEmail());
                     entity.setPhone(customerForm.getPhone());
                     entity.setAddress(customerForm.getAddress());
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     java.util.Date utilDate = sdf.parse(customerForm.getDob());
                     java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
                     entity.setDob(sqlDate);
-                    int createdCustId =  customerDao.saveCustomer(entity);
-                    System.out.println("Created customer with ID : "+createdCustId);
-                    loanEntity.setCustomerId(createdCustId);
-                    loanEntity.setLoanTypeId(Integer.parseInt(form.getLoanTypeId()));
-                    loanEntity.setBranchId(Integer.parseInt(form.getBranchId()));
-                    loanEntity.setStatusId(Integer.parseInt(form.getStatusId()));
-                    loanEntity.setPrincipalAmount(Double.parseDouble(form.getPricipalAmount()));
-                    LoanTypeService loanTypeService = new LoanTypeServiceImpl();
-                    LoanTypeForm loanTypeForm = loanTypeService.getLoanType(form.getLoanTypeId());
-                    double interestRate = Double.parseDouble(loanTypeForm.getInterestRate());
-                    loanEntity.setInterestRate(interestRate);
-                    String response = dao.addLoan(loanEntity);
-                    return response;
-                case 'n': return "Loan creation failed";
-            }
-        }else{
-            loanEntity.setCustomerId(Integer.parseInt(form.getCustomerId()));
-            loanEntity.setLoanTypeId(Integer.parseInt(form.getLoanTypeId()));
-            loanEntity.setBranchId(Integer.parseInt(form.getBranchId()));
-            loanEntity.setStatusId(Integer.parseInt(form.getStatusId()));
-            loanEntity.setPrincipalAmount(Double.parseDouble(form.getPricipalAmount()));
-            LoanTypeService loanTypeService = new LoanTypeServiceImpl();
-            LoanTypeForm loanTypeForm = loanTypeService.getLoanType(form.getLoanTypeId());
-            double interestRate = Double.parseDouble(loanTypeForm.getInterestRate());
-            loanEntity.setInterestRate(interestRate);
-            String res = dao.addLoan(loanEntity);
-            return res;
 
+                    CustomerDao customerDao = new CustomerDaoImpl();
+                    int createdCustId = customerDao.saveCustomer(entity);
+                    System.out.println("Created customer with ID: " + createdCustId);
+
+                    loanEntity.setCustomerId(createdCustId);
+                    break;
+                }
+
+                case 'n':
+                    return "Loan creation failed";
+
+                default:
+                    return "Invalid option";
+            }
+        } else {
+            loanEntity.setCustomerId(Integer.parseInt(customer.getCustId()));
         }
-        return null;
+
+        loanEntity.setLoanTypeId(Integer.parseInt(form.getLoanTypeId()));
+        loanEntity.setBranchId(Integer.parseInt(form.getBranchId()));
+        loanEntity.setStatusId(Integer.parseInt(form.getStatusId()));
+        loanEntity.setPrincipalAmount(Double.parseDouble(form.getPricipalAmount()));
+
+        LoanTypeService loanTypeService = new LoanTypeServiceImpl();
+        LoanTypeForm loanTypeForm = loanTypeService.getLoanType(form.getLoanTypeId());
+        double interestRate = Double.parseDouble(loanTypeForm.getInterestRate());
+        loanEntity.setInterestRate(interestRate);
+
+        String response = dao.addLoan(loanEntity);
+        return response;
     }
-    public boolean updateLoan(LoanForm form)
-    {
+
+
+    public boolean updateLoan(LoanForm form) {
         LoanEntity entity = new LoanEntity();
         LoanTypeService loanTypeService = new LoanTypeServiceImpl();
         entity.setLoanId(Integer.parseInt(form.getLoanId()));
@@ -111,8 +108,7 @@ public class LoanServiceImpl implements LoanService {
         return dao.updateLoan(entity);
     }
 
-    public boolean deleteLoan(String loanId)
-    {
+    public boolean deleteLoan(String loanId) {
         return dao.removeLoan(Integer.parseInt(loanId));
     }
 
@@ -122,8 +118,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanResponseForm> getAllLoanDetails()
-    {
+    public List<LoanResponseForm> getAllLoanDetails() {
         return dao.getAllLoanDetails();
     }
 

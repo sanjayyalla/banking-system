@@ -28,7 +28,7 @@ public class CustomerController {
             return false;
         }
 
-        public String getCustomer(String custID)
+        public CustomerForm getCustomer(String custID)
         {
             return service.getCustomer(custID);
         }
