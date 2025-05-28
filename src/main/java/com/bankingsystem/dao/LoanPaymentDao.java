@@ -15,4 +15,6 @@ public interface LoanPaymentDao {
     List<LoanPaymentEntity> getAllLoanPayments();
 
     boolean deleteLoanPayment(int i);
+
+    boolean saveLoanPaymentTransactionHistory(int i);
 }

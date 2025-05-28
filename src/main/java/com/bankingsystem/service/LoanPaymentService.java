@@ -12,4 +12,6 @@ public interface LoanPaymentService {
     List<LoanPaymentForm> getAllLoanPayments();
 
     boolean deleteLoanPayment(String paymentId);
+
+    boolean saveLoanPaymentTransactionHistory(String loanId);
 }

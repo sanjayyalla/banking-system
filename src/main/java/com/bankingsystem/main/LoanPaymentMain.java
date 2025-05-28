@@ -12,7 +12,7 @@ public class LoanPaymentMain {
         Scanner sc = new Scanner(System.in);
         while (true)
         {
-            System.out.println("1. Add Loan EMI Payment 2.Get all Loan Payment Details 3.Save all loan payment details to TXT file 4. Delete payment through ID");
+            System.out.println("1. Add Loan EMI Payment 2.Get all Loan Payment Details 3.Save all loan payment details to TXT file 4. Delete payment through ID 5.Save file through loan id");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1: {
@@ -62,6 +62,17 @@ public class LoanPaymentMain {
                         System.out.println("Deleted the payment");
                     }else{
                         System.out.println("Payment deletion failed");
+                    }
+                }
+                case 5:{
+                    System.out.println("Enter loan id to save transaction history: ");
+                    String loanId = sc.next();
+                    boolean isHistorySaved = controller.saveLoanPaymentTransactionHistory(loanId);
+                    if(isHistorySaved)
+                    {
+                        System.out.println("Data saved of loanId : "+loanId);
+                    }else{
+                        System.out.println("Data saving failed");
                     }
                 }
                 break;

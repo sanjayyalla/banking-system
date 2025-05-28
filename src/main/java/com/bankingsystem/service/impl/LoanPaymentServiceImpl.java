@@ -19,12 +19,12 @@ import java.util.List;
 import static java.lang.Math.round;
 
 public class LoanPaymentServiceImpl implements LoanPaymentService {
-    LoanPaymentDao dao = new LoanPaymentDaoImpl();
+    LoanPaymentDao loanPaymentDao = new LoanPaymentDaoImpl();
+
     @Override
     public String addLoanPayment(int loanId) throws Exception {
 
         LoanDao loanDao = new LoanDaoImpl();
-        LoanPaymentDao loanPaymentDao = new LoanPaymentDaoImpl();
         LoanRequestForm requestForm = new LoanRequestForm();
         requestForm.setLoanId(String.valueOf(loanId));
         LoanResponseForm responseForm = loanDao.getLoanDetailById(requestForm);
@@ -32,7 +32,7 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
         double principalAmount = Double.parseDouble(responseForm.getPrincipalAmount());
         int termMonths = Integer.parseInt(responseForm.getTermMonths());
         EmiCalculatorUtil emiCalculatorUtil = new EmiCalculatorUtil();
-        List<EMI> emiList = emiCalculatorUtil.calculateEmi(principalAmount,interestRate,termMonths);
+        List<EMI> emiList = emiCalculatorUtil.calculateEmi(principalAmount, interestRate, termMonths);
         int index = loanPaymentDao.getLoanPaymentCount(loanId);
         if (index >= emiList.size()) {
             return "All EMIs already paid!";
@@ -50,9 +50,8 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
         return returnedResponse;
     }
 
-    public boolean saveAllLoanPaymentDetails()
-    {
-        return dao.saveAllLoanPaymentDetails();
+    public boolean saveAllLoanPaymentDetails() {
+        return loanPaymentDao.saveAllLoanPaymentDetails();
     }
 
     public List<LoanPaymentForm> getAllLoanPayments() {
@@ -75,6 +74,11 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
 
     @Override
     public boolean deleteLoanPayment(String paymentId) {
-        return dao.deleteLoanPayment(Integer.parseInt(paymentId));
+        return loanPaymentDao.deleteLoanPayment(Integer.parseInt(paymentId));
+    }
+
+    @Override
+    public boolean saveLoanPaymentTransactionHistory(String loanId) {
+        return loanPaymentDao.saveLoanPaymentTransactionHistory(Integer.parseInt(loanId));
     }
 }

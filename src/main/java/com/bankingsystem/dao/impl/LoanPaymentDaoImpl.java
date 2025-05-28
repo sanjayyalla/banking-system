@@ -119,5 +119,41 @@ public class LoanPaymentDaoImpl implements LoanPaymentDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean saveLoanPaymentTransactionHistory(int loanId) {
+        String query = "SELECT payment_id, payment_date, amount_paid, principal_component, interest_component FROM Loan_Payment WHERE loan_id = ?";
+        Path path = Paths.get("LoanTransactionHistory_" + loanId + ".txt");
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, loanId);
+            ResultSet rs = pstmt.executeQuery();
+
+            List<String> lines = new ArrayList<>();
+            lines.add("PaymentID\tPaymentDate\tAmountPaid\tPrincipalComponent\tInterestComponent");
+
+            while (rs.next()) {
+                String line = rs.getInt("payment_id") + "\t" +
+                        rs.getDate("payment_date") + "\t" +
+                        rs.getDouble("amount_paid") + "\t" +
+                        rs.getDouble("principal_component") + "\t" +
+                        rs.getDouble("interest_component");
+                lines.add(line);
+            }
+
+            if (lines.size() == 1) {
+                lines.add("No transactions found for loan ID: " + loanId);
+            }
+
+            Files.write(path, lines, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            return true;
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 
